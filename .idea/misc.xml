@@ -3,6 +3,9 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/hp/AndroidStudioProjects/CashHere/app/src/main/res/drawable-v24/bg_btn_addname.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/CashHere/app/src/main/res/drawable/bg_et_addname.xml" value="0.19583333333333333" />
+        <entry key="..\:/Users/hp/AndroidStudioProjects/CashHere/app/src/main/res/layout/activity_add_name.xml" value="0.22" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/CashHere/app/src/main/res/layout/activity_dashboard.xml" value="0.1814814814814815" />
         <entry key="..\:/Users/hp/AndroidStudioProjects/CashHere/app/src/main/res/layout/activity_main.xml" value="0.21" />
       </map>
