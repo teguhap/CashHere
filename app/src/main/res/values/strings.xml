@@ -3,4 +3,11 @@
     <string name="xyz_cafe">XYZ CAFE</string>
     <string name="simpan">SIMPAN</string>
     <string name="cafe_ku">Cafeku</string>
+    <string name="food">Food</string>
+    <string name="drink">Drink</string>
+    <string name="item">Item</string>
+    <string name="bayar">Bayar</string>
+    <string name="background">background</string>
+    <string name="history">History</string>
+    <string name="setting">Setting</string>
 </resources>
