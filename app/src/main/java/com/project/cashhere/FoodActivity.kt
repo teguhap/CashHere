@@ -3,7 +3,9 @@ package com.project.cashhere
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.EditText
 import android.widget.ImageView
+import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -20,8 +22,12 @@ class FoodActivity : AppCompatActivity() {
 
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         window.statusBarColor = ContextCompat.getColor(this,R.color.white)
+        window.setBackgroundDrawableResource(R.drawable.bg_dashboard);
 
         val btnBack = findViewById<ImageView>(R.id.btnBackFood)
+        val svFood = findViewById<SearchView>(R.id.svFood)
+
+
 
         btnBack.setOnClickListener {
             onBackPressed()

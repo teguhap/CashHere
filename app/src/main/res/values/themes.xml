@@ -27,4 +27,13 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+
+    <style name="ThemeOverlay.SearchView" parent="">
+        <!-- Text color -->
+        <item name="android:editTextColor">@color/white_smooth</item>
+        <item name="android:fontFamily">@font/russo_one</item>
+        <item name="android:textSize">14sp</item>
+        <!-- Hint text color -->
+        <item name="android:textColorHint">#B7FAFAFA</item>
+    </style>
 </resources>

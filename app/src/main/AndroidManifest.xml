@@ -11,6 +11,7 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
         android:theme="@style/Theme.CashHere">
         <meta-data
             android:name="com.google.android.actions"
@@ -18,7 +19,8 @@
 
         <activity
             android:name=".FoodActivity"
-            android:exported="false" />
+            android:exported="false"
+            />
         <activity
             android:name=".AddNameActivity"
             android:exported="false"
