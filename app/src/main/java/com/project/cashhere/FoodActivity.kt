@@ -3,18 +3,15 @@ package com.project.cashhere
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
 import android.widget.ImageView
-import android.widget.ListView
 import androidx.core.content.ContextCompat
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
-import com.android.volley.Response
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
-import android.R.layout.simple_list_item_1
-import android.widget.Toast
+import androidx.recyclerview.widget.RecyclerView
 
 class FoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,20 +39,23 @@ class FoodActivity : AppCompatActivity() {
             {
                 response ->
 
-                val list : ArrayList<String> = ArrayList()
-                val list_food = findViewById<ListView>(R.id.lv_food)
+                val listFood = mutableListOf<ListItem>()
+                val rvFood = findViewById<RecyclerView>(R.id.rv_food)
 
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
                 val jsonArray:JSONArray = jsonObject.getJSONArray("food")
-                var data_food = ""
 
                 for(i in 0 until jsonArray.length()){
                     val jsonInner : JSONObject = jsonArray.getJSONObject(i)
-                    data_food = ""+jsonInner.get("kode")+","+jsonInner.get("nama")+","+jsonInner.get("harga")
-                    list.add(data_food)
+                    val kode = jsonInner.get("kode").toString()
+                    val nama =  jsonInner.get("nama").toString()
+                    val harga = jsonInner.get("harga").toString()
+                    listFood.add(ListItem(kode,nama,harga))
                 }
-                list_food.adapter = ArrayAdapter(this, simple_list_item_1,list)
+                rvFood.adapter = AdapterRecycleView(listFood)
+                rvFood.layoutManager = LinearLayoutManager(this)
+                rvFood.setHasFixedSize(true)
             }, {})
 
             queue.add(stringRequest)
