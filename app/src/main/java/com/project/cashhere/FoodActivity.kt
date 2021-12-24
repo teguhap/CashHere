@@ -1,7 +1,9 @@
 package com.project.cashhere
 
+import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.EditText
 import android.widget.ImageView
@@ -14,6 +16,8 @@ import com.android.volley.toolbox.Volley
 import org.json.JSONArray
 import org.json.JSONObject
 import androidx.recyclerview.widget.RecyclerView
+import java.util.*
+import kotlin.collections.ArrayList
 
 class FoodActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,18 +30,52 @@ class FoodActivity : AppCompatActivity() {
 
         val btnBack = findViewById<ImageView>(R.id.btnBackFood)
         val svFood = findViewById<SearchView>(R.id.svFood)
-
-
+        val rvFood = findViewById<RecyclerView>(R.id.rv_food)
 
         btnBack.setOnClickListener {
             onBackPressed()
             finish()
         }
 
-        getFoodData()
+        val listFood = ArrayList<ListItem>()
+        val displayListFood = ArrayList<ListItem>()
+
+        getFoodData(listFood,displayListFood)
+
+        svFood.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                return false
+            }
+
+            @SuppressLint("NotifyDataSetChanged")
+            override fun onQueryTextChange(newText: String?): Boolean {
+
+                if(newText!!.isNotEmpty()){
+                    displayListFood.clear()
+                    val search = newText.lowercase(Locale.getDefault())
+                    listFood.forEach {
+                        if(it.nama.lowercase(Locale.getDefault()).contains(search)
+                                ||it.kode.lowercase(Locale.getDefault()).contains(search)
+                                ||it.harga.lowercase(Locale.getDefault()).contains(search)) {
+                            displayListFood.add(it)
+                        }
+                        rvFood.adapter!!.notifyDataSetChanged()
+                    }
+
+                }else{
+                    displayListFood.clear()
+                    displayListFood.addAll(listFood)
+                    rvFood.adapter!!.notifyDataSetChanged()
+
+                }
+                return true;
+            }
+        })
     }
 
-    fun getFoodData(){
+
+
+    fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
 
@@ -45,9 +83,7 @@ class FoodActivity : AppCompatActivity() {
             {
                 response ->
 
-                val listFood = mutableListOf<ListItem>()
                 val rvFood = findViewById<RecyclerView>(R.id.rv_food)
-
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
                 val jsonArray:JSONArray = jsonObject.getJSONArray("food")
@@ -59,14 +95,14 @@ class FoodActivity : AppCompatActivity() {
                     val harga = jsonInner.get("harga").toString()
                     listFood.add(ListItem(kode,nama,harga))
                 }
-                rvFood.adapter = AdapterRecycleView(listFood)
+
+                displayListFood.addAll(listFood)
+                val adapter  = AdapterRecycleView(displayListFood)
+                rvFood.adapter = adapter
                 rvFood.layoutManager = LinearLayoutManager(this)
                 rvFood.setHasFixedSize(true)
+
             }, {})
-
             queue.add(stringRequest)
-
-
-
     }
 }
