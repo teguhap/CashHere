@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.project.cashhere">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:name=".Sender"
@@ -12,20 +12,22 @@
         android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:windowSoftInputMode="adjustResize|stateAlwaysHidden"
-        android:theme="@style/Theme.CashHere">
+        android:theme="@style/Theme.CashHere"
+        android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
+        <activity
+            android:name=".BayarActivity"
+            android:exported="false" />
+
         <meta-data
             android:name="com.google.android.actions"
             android:resource="@xml/network_security_config" />
 
         <activity
             android:name=".DrinkActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".FoodActivity"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".AddNameActivity"
             android:exported="false"

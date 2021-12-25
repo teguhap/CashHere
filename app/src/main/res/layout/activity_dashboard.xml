@@ -232,7 +232,7 @@
 
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvMenu"
+        android:id="@+id/cvBayar"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:elevation="8dp"
@@ -279,8 +279,8 @@
         app:cardElevation="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cvMenu"
-        app:layout_constraintTop_toTopOf="@+id/cvMenu"
+        app:layout_constraintStart_toEndOf="@+id/cvBayar"
+        app:layout_constraintTop_toTopOf="@+id/cvBayar"
         app:layout_constraintBottom_toTopOf="@id/cvSetting"
         >
 
@@ -315,9 +315,9 @@
         android:elevation="8dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        app:layout_constraintBottom_toBottomOf="@+id/cvMenu"
+        app:layout_constraintBottom_toBottomOf="@+id/cvBayar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cvMenu">
+        app:layout_constraintStart_toEndOf="@+id/cvBayar">
 
         <LinearLayout
             android:layout_width="170dp"
