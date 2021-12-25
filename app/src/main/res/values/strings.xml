@@ -12,4 +12,11 @@
     <string name="setting">Setting</string>
     <string name="btnback">btnback</string>
     <string name="update">Update</string>
+    <string name="_48192">48192</string>
+    <string name="ex_19000">ex : 19000</string>
+    <string name="harga">Harga</string>
+    <string name="nasi_goreng">Nasi Goreng</string>
+    <string name="kode">Kode</string>
+    <string name="menu_baru">Menu Baru</string>
+    <string name="nama">Nama</string>
 </resources>

@@ -14,7 +14,7 @@ class MainActivity : AppCompatActivity() {
 
         window.statusBarColor = ContextCompat.getColor(this,R.color.black)
 
-        Handler().postDelayed({ Intent(this,AddNameActivity :: class.java).also {
+        Handler().postDelayed({ Intent(this,DashboardActivity:: class.java).also {
             startActivity(it)
             finish()
         } },3000L)

@@ -22,42 +22,42 @@ import org.json.JSONException
 import java.util.*
 import kotlin.collections.ArrayList
 
-class FoodActivity : AppCompatActivity() {
+class DrinkActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_food)
+        setContentView(R.layout.activity_drink)
 
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
         window.statusBarColor = ContextCompat.getColor(this,R.color.white)
         window.setBackgroundDrawableResource(R.drawable.bg_dashboard);
 
         //INISIALISASI DARI LAYOUT
-        val btnBack = findViewById<ImageView>(R.id.btnBackFood)
-        val btnAdd = findViewById<ImageView>(R.id.btnAddItemFood)
-        val btnCancel = findViewById<ImageView>(R.id.btnCancelAddItemFood)
-        val btnSimpan = findViewById<Button>(R.id.btnSimpanFood)
-        val svFood = findViewById<SearchView>(R.id.svFood)
-        val rvFood = findViewById<RecyclerView>(R.id.rv_food)
-        val llFood = findViewById<LinearLayout>(R.id.llAddItemFood)
+        val btnBack = findViewById<ImageView>(R.id.btnBackDrink)
+        val btnAdd = findViewById<ImageView>(R.id.btnAddItemDrink)
+        val btnCancel = findViewById<ImageView>(R.id.btnCancelAddItemDrink)
+        val btnSimpan = findViewById<Button>(R.id.btnSimpanDrink)
+        val svDrink = findViewById<SearchView>(R.id.svDrink)
+        val rvDrink = findViewById<RecyclerView>(R.id.rv_Drink)
+        val llDrink = findViewById<LinearLayout>(R.id.llAddItemDrink)
 
 
         //INISIALISASI DARI LAYOUT (Tambah Menu)
-        val etKode = findViewById<EditText>(R.id.etKodeFood)
-        val etNama = findViewById<EditText>(R.id.etNamaFood)
-        val etHarga = findViewById<EditText>(R.id.etHargaFood)
+        val etKode = findViewById<EditText>(R.id.etKodeDrink)
+        val etNama = findViewById<EditText>(R.id.etNamaDrink)
+        val etHarga = findViewById<EditText>(R.id.etHargaDrink)
 
 
 //VIEW ITEM FOOD
         //ARRAY LIST ITEM FOOD
-        val listFood = ArrayList<ListItem>()
-        val displayListFood = ArrayList<ListItem>()
+        val listDrink = ArrayList<ListItem>()
+        val displayListDrink = ArrayList<ListItem>()
 
         //MENGAMBIL DATA ITEM FOOD DAN MEMASUKAN DATA KE ARRAYLIST
         //JUGA UNTUK MENAMPILKAN DATA KE RECYCLE_VIEW (LIST)
-        getFoodData(listFood,displayListFood)
+        getFoodData(listDrink,displayListDrink)
 
         //SEARCH VIEW ITEM
-        svFood.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+        svDrink.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
             override fun onQueryTextSubmit(query: String?): Boolean {
                 return false
             }
@@ -66,21 +66,21 @@ class FoodActivity : AppCompatActivity() {
             override fun onQueryTextChange(newText: String?): Boolean {
 
                 if(newText!!.isNotEmpty()){
-                    displayListFood.clear()
+                    displayListDrink.clear()
                     val search = newText.lowercase(Locale.getDefault())
-                    listFood.forEach {
+                    listDrink.forEach {
                         if(it.nama.lowercase(Locale.getDefault()).contains(search)
                                 ||it.kode.lowercase(Locale.getDefault()).contains(search)
                                 ||it.harga.lowercase(Locale.getDefault()).contains(search)) {
-                            displayListFood.add(it)
+                            displayListDrink.add(it)
                         }
-                        rvFood.adapter!!.notifyDataSetChanged()
+                        rvDrink.adapter!!.notifyDataSetChanged()
                     }
 
                 }else{
-                    displayListFood.clear()
-                    displayListFood.addAll(listFood)
-                    rvFood.adapter!!.notifyDataSetChanged()
+                    displayListDrink.clear()
+                    displayListDrink.addAll(listDrink)
+                    rvDrink.adapter!!.notifyDataSetChanged()
 
                 }
                 return true;
@@ -95,13 +95,13 @@ class FoodActivity : AppCompatActivity() {
             val harga = etHarga.text.toString()
 
             addFoodData(kode,nama,harga)
-            listFood.clear()
-            displayListFood.clear()
-            getFoodData(listFood,displayListFood)
+            listDrink.clear()
+            displayListDrink.clear()
+            getFoodData(listDrink,displayListDrink)
 
-            rvFood.visibility = View.VISIBLE
-            svFood.visibility = View.VISIBLE
-            llFood.visibility = View.GONE
+            rvDrink.visibility = View.VISIBLE
+            svDrink.visibility = View.VISIBLE
+            llDrink.visibility = View.GONE
             btnAdd.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
 
@@ -120,9 +120,9 @@ class FoodActivity : AppCompatActivity() {
         btnAdd.setOnClickListener {
             val kodeRandom = (100..999).random()
             etKode.setText(kodeRandom.toString())
-            rvFood.visibility = View.GONE
-            svFood.visibility = View.GONE
-            llFood.visibility = View.VISIBLE
+            rvDrink.visibility = View.GONE
+            svDrink.visibility = View.GONE
+            llDrink.visibility = View.VISIBLE
             btnAdd.visibility = View.GONE
             btnCancel.visibility = View.VISIBLE
             etNama.text.clear()
@@ -131,9 +131,9 @@ class FoodActivity : AppCompatActivity() {
 
         //BUTTON CANCEL DI TOOLBAR
         btnCancel.setOnClickListener {
-            rvFood.visibility = View.VISIBLE
-            svFood.visibility = View.VISIBLE
-            llFood.visibility = View.GONE
+            rvDrink.visibility = View.VISIBLE
+            svDrink.visibility = View.VISIBLE
+            llDrink.visibility = View.GONE
             btnAdd.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
         }
@@ -145,16 +145,16 @@ class FoodActivity : AppCompatActivity() {
     //FUNCTION MENGAMBIL DATA ITEM FOOD DARI DATABASE
     fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
+        val url = "http://192.168.43.55/cash_here/index.php?op=drink_view"
 
         val stringRequest = StringRequest(Request.Method.GET,url,
             {
                 response ->
 
-                val rvFood = findViewById<RecyclerView>(R.id.rv_food)
+                val rvDrink = findViewById<RecyclerView>(R.id.rv_Drink)
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
-                val jsonArray:JSONArray = jsonObject.getJSONArray("food")
+                val jsonArray:JSONArray = jsonObject.getJSONArray("drink")
 
                 for(i in 0 until jsonArray.length()){
                     val jsonInner : JSONObject = jsonArray.getJSONObject(i)
@@ -166,9 +166,9 @@ class FoodActivity : AppCompatActivity() {
 
                 displayListFood.addAll(listFood)
                 val adapter  = AdapterRecycleView(displayListFood)
-                rvFood.adapter = adapter
-                rvFood.layoutManager = LinearLayoutManager(this)
-                rvFood.setHasFixedSize(true)
+                rvDrink.adapter = adapter
+                rvDrink.layoutManager = LinearLayoutManager(this)
+                rvDrink.setHasFixedSize(true)
 
             }, {})
             queue.add(stringRequest)
@@ -178,7 +178,7 @@ class FoodActivity : AppCompatActivity() {
     //FUNCTION MENAMBAH DATA ITEM FOOD KE DATABASE
     fun addFoodData(kode:String,nama:String,harga:String){
         val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
-        val ACTION = BASE_URL+"food_create&kode=$kode&nama=$nama&harga=$harga"
+        val ACTION = BASE_URL+"drink_create&kode=$kode&nama=$nama&harga=$harga"
 
         val stringRequest = object : StringRequest(Request.Method.GET,ACTION,
             Response.Listener<String>{ response ->

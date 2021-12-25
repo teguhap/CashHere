@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="18dp"
             android:fontFamily="@font/russo_one"
-            android:text="Cafeku"
+            android:text="Cash Here"
             android:textColor="@color/hijau_utama"
             android:textSize="24sp" />
 
