@@ -95,15 +95,11 @@ class FoodActivity : AppCompatActivity() {
             val harga = etHarga.text.toString()
 
             addFoodData(kode,nama,harga)
-            listFood.clear()
-            displayListFood.clear()
-            getFoodData(listFood,displayListFood)
 
-            rvFood.visibility = View.VISIBLE
-            svFood.visibility = View.VISIBLE
-            llFood.visibility = View.GONE
-            btnAdd.visibility = View.VISIBLE
-            btnCancel.visibility = View.GONE
+            val kodeRandom = (100..999).random()
+            etKode.setText(kodeRandom.toString())
+            etNama.text.clear()
+            etHarga.text.clear()
 
         }
 
@@ -136,6 +132,10 @@ class FoodActivity : AppCompatActivity() {
             llFood.visibility = View.GONE
             btnAdd.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
+
+            listFood.clear()
+            displayListFood.clear()
+            getFoodData(listFood,displayListFood)
         }
 
     }
@@ -169,6 +169,7 @@ class FoodActivity : AppCompatActivity() {
                 rvFood.adapter = adapter
                 rvFood.layoutManager = LinearLayoutManager(this)
                 rvFood.setHasFixedSize(true)
+
 
             }, {})
             queue.add(stringRequest)

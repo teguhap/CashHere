@@ -54,7 +54,7 @@ class DrinkActivity : AppCompatActivity() {
 
         //MENGAMBIL DATA ITEM FOOD DAN MEMASUKAN DATA KE ARRAYLIST
         //JUGA UNTUK MENAMPILKAN DATA KE RECYCLE_VIEW (LIST)
-        getFoodData(listDrink,displayListDrink)
+        getDrinkData(listDrink,displayListDrink)
 
         //SEARCH VIEW ITEM
         svDrink.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
@@ -94,16 +94,12 @@ class DrinkActivity : AppCompatActivity() {
             val nama = etNama.text.toString()
             val harga = etHarga.text.toString()
 
-            addFoodData(kode,nama,harga)
-            listDrink.clear()
-            displayListDrink.clear()
-            getFoodData(listDrink,displayListDrink)
+            addDrinkData(kode,nama,harga)
 
-            rvDrink.visibility = View.VISIBLE
-            svDrink.visibility = View.VISIBLE
-            llDrink.visibility = View.GONE
-            btnAdd.visibility = View.VISIBLE
-            btnCancel.visibility = View.GONE
+            val kodeRandom = (100..999).random()
+            etKode.setText(kodeRandom.toString())
+            etNama.text.clear()
+            etHarga.text.clear()
 
         }
 
@@ -136,6 +132,10 @@ class DrinkActivity : AppCompatActivity() {
             llDrink.visibility = View.GONE
             btnAdd.visibility = View.VISIBLE
             btnCancel.visibility = View.GONE
+
+            listDrink.clear()
+            displayListDrink.clear()
+            getDrinkData(listDrink,displayListDrink)
         }
 
     }
@@ -143,17 +143,16 @@ class DrinkActivity : AppCompatActivity() {
 
 
     //FUNCTION MENGAMBIL DATA ITEM FOOD DARI DATABASE
-    fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
+    fun getDrinkData(listDrink : MutableList<ListItem>, displayListDrink : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.43.55/cash_here/index.php?op=drink_view"
 
         val stringRequest = StringRequest(Request.Method.GET,url,
-            {
-                response ->
+            {          response ->
 
                 val rvDrink = findViewById<RecyclerView>(R.id.rv_Drink)
-                val strRespon = response.toString()
-                val jsonObject = JSONObject(strRespon)
+                val strResponse = response.toString()
+                val jsonObject = JSONObject(strResponse)
                 val jsonArray:JSONArray = jsonObject.getJSONArray("drink")
 
                 for(i in 0 until jsonArray.length()){
@@ -161,22 +160,22 @@ class DrinkActivity : AppCompatActivity() {
                     val kode = jsonInner.get("kode").toString()
                     val nama =  jsonInner.get("nama").toString()
                     val harga = jsonInner.get("harga").toString()
-                    listFood.add(ListItem(kode,nama,harga))
+                    listDrink.add(ListItem(kode,nama,harga))
                 }
 
-                displayListFood.addAll(listFood)
-                val adapter  = AdapterRecycleView(displayListFood)
+                displayListDrink.addAll(listDrink)
+                val adapter  = AdapterRecycleView(displayListDrink)
                 rvDrink.adapter = adapter
                 rvDrink.layoutManager = LinearLayoutManager(this)
                 rvDrink.setHasFixedSize(true)
 
             }, {})
-            queue.add(stringRequest)
+        queue.add(stringRequest)
     }
 
 
     //FUNCTION MENAMBAH DATA ITEM FOOD KE DATABASE
-    fun addFoodData(kode:String,nama:String,harga:String){
+    fun addDrinkData(kode:String, nama:String, harga:String){
         val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
         val ACTION = BASE_URL+"drink_create&kode=$kode&nama=$nama&harga=$harga"
 

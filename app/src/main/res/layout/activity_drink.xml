@@ -79,7 +79,7 @@
         android:id="@+id/rv_Drink"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
@@ -149,7 +149,7 @@
             android:paddingEnd="12dp"
             android:fontFamily="@font/russo_one"
             android:textSize="14sp"
-            android:hint="@string/nasi_goreng"
+            android:hint="@string/coffe_latte"
             android:background="@drawable/bg_et_addname"
             />
 

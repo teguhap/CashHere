@@ -24,7 +24,7 @@ class DashboardActivity : AppCompatActivity() {
         }
 
         cvDrink.setOnClickListener {
-            Intent(this,FoodActivity :: class.java).also {
+            Intent(this,DrinkActivity :: class.java).also {
                 startActivity(it)
             }
         }
