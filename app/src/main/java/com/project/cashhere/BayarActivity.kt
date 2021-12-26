@@ -3,6 +3,7 @@ package com.project.cashhere
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.ImageView
 import android.widget.SearchView
 import android.widget.TextView
@@ -49,13 +50,14 @@ class BayarActivity : AppCompatActivity() {
 
 
         btnDropDownFood.setOnClickListener {
-            rvBayarFood.visibility = View.VISIBLE
             btnDropDownFood.visibility = View.GONE
             btnDropUpFood.visibility = View.VISIBLE
+
+            val animationSlideDown = AnimationUtils.loadAnimation(this,R.anim.drop_down_anim)
+            rvBayarFood.animation = animationSlideDown
         }
 
         btnDropUpFood.setOnClickListener {
-            rvBayarFood.visibility = View.GONE
             btnDropDownFood.visibility = View.VISIBLE
             btnDropUpFood.visibility = View.GONE
 
