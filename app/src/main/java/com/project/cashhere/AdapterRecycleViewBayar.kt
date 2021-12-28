@@ -1,5 +1,7 @@
 package com.project.cashhere
 
+import android.content.Context
+import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,19 +30,23 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
             val btnTambahJumlah = findViewById<ImageView>(R.id.btnAdd)
             val btnKurangJumlah = findViewById<ImageView>(R.id.btnMin)
             val tvJumlahItem = findViewById<TextView>(R.id.tvJumlahItem)
+            val view = LayoutInflater.from(context).inflate()
+
 
             val fadeInAnim = AnimationUtils.loadAnimation(context,R.anim.fade_in)
 
             var jumlahItem = 1
 
-            btnTambahMenu.setOnClickListener {
-                cardView.visibility = View.VISIBLE
-                cardView.animation = fadeInAnim
-                cardView.animation.start()
-                btnTambahMenu.visibility = View.GONE
-                jumlahItem = 1
-                tvJumlahItem.text = jumlahItem.toString()
-            }
+//            btnTambahMenu.setOnClickListener {
+//                cardView.visibility = View.VISIBLE
+//                cardView.animation = fadeInAnim
+//                cardView.animation.start()
+//                btnTambahMenu.visibility = View.GONE
+//                jumlahItem = 1
+//                tvJumlahItem.text = jumlahItem.toString()
+//            }
+            val itemClick: (Int) -> Unit
+            btnTambahMenu.setOnClickListener({itemClick(position)})
 
             btnTambahJumlah.setOnClickListener {
                 jumlahItem+=1

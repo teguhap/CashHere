@@ -36,4 +36,9 @@
         <!-- Hint text color -->
         <item name="android:textColorHint">#B7FAFAFA</item>
     </style>
+
+    <style name="spinnerThem" parent="Widget.AppCompat.Spinner">
+        <item name="android:textColor">@color/hijau_utama</item>
+        <item name="fontFamily">@font/russo_one</item>
+    </style>
 </resources>

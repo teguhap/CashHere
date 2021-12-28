@@ -21,4 +21,13 @@
     <string name="nama">Nama</string>
     <string name="coffe_latte">Coffe Latte</string>
     <string name="tambah">Tambah</string>
+
+    <string-array name="metode_bayar">
+        <item>Cash</item>
+        <item>Dana</item>
+        <item>OVO</item>
+        <item>Gopay</item>
+        <item>Shopeepay</item>
+        <item>Debit</item>
+    </string-array>
 </resources>
