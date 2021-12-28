@@ -1,12 +1,12 @@
 package com.project.cashhere
 
-import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
-import java.util.*
 
 
 class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adapter<AdapterRecycleViewBayar.ViewHolderView>() {
@@ -23,10 +23,41 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
             val tvNama = findViewById<TextView>(R.id.tvNamaListBayar)
             val tvKode = findViewById<TextView>(R.id.tvKodeListBayar)
             val tvHarga = findViewById<TextView>(R.id.tvHargaListBayar)
-            val btnUpdate = findViewById<Button>(R.id.btnUpdate)
+            val btnTambahMenu = findViewById<Button>(R.id.btnTambah)
+            val cardView = findViewById<CardView>(R.id.cvTambahItem)
+            val btnTambahJumlah = findViewById<ImageView>(R.id.btnAdd)
+            val btnKurangJumlah = findViewById<ImageView>(R.id.btnMin)
+            val tvJumlahItem = findViewById<TextView>(R.id.tvJumlahItem)
 
-            btnUpdate.setOnClickListener {
-                Toast.makeText(context,"Fitur sedang dibuat",Toast.LENGTH_SHORT).show()
+            val fadeInAnim = AnimationUtils.loadAnimation(context,R.anim.fade_in)
+
+            var jumlahItem = 1
+
+            btnTambahMenu.setOnClickListener {
+                cardView.visibility = View.VISIBLE
+                cardView.animation = fadeInAnim
+                cardView.animation.start()
+                btnTambahMenu.visibility = View.GONE
+                jumlahItem = 1
+                tvJumlahItem.text = jumlahItem.toString()
+            }
+
+            btnTambahJumlah.setOnClickListener {
+                jumlahItem+=1
+                tvJumlahItem.text = jumlahItem.toString()
+            }
+
+            btnKurangJumlah.setOnClickListener {
+
+                if(jumlahItem==1){
+                    cardView.visibility = View.GONE
+                    btnTambahMenu.visibility = View.VISIBLE
+                    btnTambahMenu.animation = fadeInAnim
+                    btnTambahMenu.animation.start()
+                }
+                jumlahItem-=1
+                tvJumlahItem.text = jumlahItem.toString()
+
             }
 
             val curItem = listData[position]

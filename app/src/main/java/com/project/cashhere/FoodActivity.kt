@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -39,6 +40,10 @@ class FoodActivity : AppCompatActivity() {
         val svFood = findViewById<SearchView>(R.id.svFood)
         val rvFood = findViewById<RecyclerView>(R.id.rv_food)
         val llFood = findViewById<LinearLayout>(R.id.llAddItemFood)
+
+        val fadeInAnim = AnimationUtils.loadAnimation(this,R.anim.fade_in)
+        val slideInAnim = AnimationUtils.loadAnimation(this,R.anim.slide_in)
+
 
 
         //INISIALISASI DARI LAYOUT (Tambah Menu)
@@ -119,6 +124,8 @@ class FoodActivity : AppCompatActivity() {
             rvFood.visibility = View.GONE
             svFood.visibility = View.GONE
             llFood.visibility = View.VISIBLE
+            llFood.animation = slideInAnim
+            llFood.animation.start()
             btnAdd.visibility = View.GONE
             btnCancel.visibility = View.VISIBLE
             etNama.text.clear()
