@@ -1,14 +1,17 @@
 package com.project.cashhere
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
-import android.widget.ImageView
-import android.widget.SearchView
-import android.widget.TextView
+import android.widget.*
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -36,12 +39,15 @@ class BayarActivity : AppCompatActivity() {
         val rvBayarFood = findViewById<RecyclerView>(R.id.rvFoodBayar)
         val rvBayarDrink = findViewById<RecyclerView>(R.id.rvDrinkBayar)
         val btnBackBayar = findViewById<ImageView>(R.id.btnBackBayar)
+        val tvTotalBayar = findViewById<TextView>(R.id.tvTotalBayar)
+        val spMetodeBayar = findViewById<Spinner>(R.id.spMetodeBayar)
+        val btnBayar = findViewById<Button>(R.id.btnBayar)
+
 
         btnBackBayar.setOnClickListener {
             onBackPressed()
             finish()
         }
-
 
         //VIEW ITEM FOOD
         //ARRAY LIST ITEM FOOD
@@ -129,10 +135,33 @@ class BayarActivity : AppCompatActivity() {
             btnDropUpDrink.visibility = View.GONE
         }
 
+        var totalbayar = 0
+
+        mMessageReceiver =  object : BroadcastReceiver() {
+        override fun onReceive(context: Context?, intent: Intent?) {
+            val kode = intent?.getStringExtra("kode")
+            val nama = intent?.getStringExtra("nama")
+            val harga = intent?.getStringExtra("harga")
+            val jumlahItem = intent?.getIntExtra("jumlah",0)
+            totalbayar+=harga.toString().toInt()
+            tvTotalBayar.text = totalbayar.toString()
+
+          }
+        }
+
+
+        //Broadcas dari RecycleAdapter
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("totalItemMenu")
+        )
+
     }
 
+    lateinit var mMessageReceiver: BroadcastReceiver
 
-     fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
+
+
+    fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
 
