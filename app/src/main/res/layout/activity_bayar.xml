@@ -42,14 +42,14 @@
 
     </RelativeLayout>
 
-    <androidx.appcompat.widget.SearchView
-        android:id="@+id/svBayar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/hijau_utama"
-        android:theme="@style/ThemeOverlay.SearchView"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        app:searchIcon="@drawable/ic_search" />
+<!--    <androidx.appcompat.widget.SearchView-->
+<!--        android:id="@+id/svBayar"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@color/hijau_utama"-->
+<!--        android:theme="@style/ThemeOverlay.SearchView"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/toolbar"-->
+<!--        app:searchIcon="@drawable/ic_search" />-->
 
 
     <ScrollView
@@ -59,7 +59,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/svBayar">
+        app:layout_constraintTop_toBottomOf="@+id/toolbar">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

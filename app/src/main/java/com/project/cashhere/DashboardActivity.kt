@@ -17,6 +17,7 @@ class DashboardActivity : AppCompatActivity() {
         val cvFood = findViewById<CardView>(R.id.cv1)
         val cvDrink = findViewById<CardView>(R.id.cv2)
         val cvBayar = findViewById<CardView>(R.id.cvBayar)
+        val cvHistory = findViewById<CardView>(R.id.cvHistory)
 
         cvFood.setOnClickListener {
             Intent(this,FoodActivity :: class.java).also {
@@ -35,6 +36,13 @@ class DashboardActivity : AppCompatActivity() {
                 startActivity(it)
             }
         }
+
+        cvHistory.setOnClickListener {
+            Intent(this,HistoryActivity :: class.java).also {
+                startActivity(it)
+            }
+        }
+
 
     }
 }

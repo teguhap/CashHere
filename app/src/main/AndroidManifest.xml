@@ -15,6 +15,12 @@
         android:theme="@style/Theme.CashHere"
         android:windowSoftInputMode="adjustResize|stateAlwaysHidden">
         <activity
+            android:name=".HistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".DisplayPesananActivity"
+            android:exported="false" />
+        <activity
             android:name=".BayarActivity"
             android:exported="false" />
 
