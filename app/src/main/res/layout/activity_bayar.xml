@@ -219,7 +219,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:fontFamily="@font/russo_one"
-                android:text="Rp120000"
+                android:text="Rp0"
                 android:textColor="#00140F"
                 android:textSize="25sp"
                 app:layout_constraintStart_toStartOf="parent"

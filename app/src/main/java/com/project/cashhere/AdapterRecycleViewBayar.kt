@@ -38,7 +38,7 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
 
             val fadeInAnim = AnimationUtils.loadAnimation(context,R.anim.fade_in)
 
-            var jumlahItem = 1
+            var jumlahItem = 0
 
             val curItem = listData[position]
             tvKode.text = curItem.kode
@@ -70,6 +70,14 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
             btnTambahJumlah.setOnClickListener {
                 jumlahItem+=1
                 tvJumlahItem.text = jumlahItem.toString()
+
+                intent.apply {
+                    putExtra("kode",kode)
+                    putExtra("nama",nama)
+                    putExtra("harga",harga)
+                    putExtra("jumlah",jmlItem)
+                }
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
             }
 
             btnKurangJumlah.setOnClickListener {
@@ -82,6 +90,15 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
                 }
                 jumlahItem-=1
                 tvJumlahItem.text = jumlahItem.toString()
+                val intentKurang = Intent("kurangItemMenu")
+
+                intentKurang.apply {
+                    putExtra("kode",kode)
+                    putExtra("nama",nama)
+                    putExtra("harga",harga)
+                    putExtra("jumlah",jmlItem)
+                }
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intentKurang)
 
             }
 

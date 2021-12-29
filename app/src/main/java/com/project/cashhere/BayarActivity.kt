@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
@@ -27,7 +28,7 @@ class BayarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_bayar)
 
-        window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR)
+        window.decorView.systemUiVisibility = View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
         window.statusBarColor = ContextCompat.getColor(this,R.color.white)
         window.setBackgroundDrawableResource(R.drawable.bg_dashboard);
 
@@ -136,6 +137,7 @@ class BayarActivity : AppCompatActivity() {
         }
 
         var totalbayar = 0
+        val listPesenan = ArrayList<String>()
 
         mMessageReceiver =  object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
@@ -145,8 +147,24 @@ class BayarActivity : AppCompatActivity() {
             val jumlahItem = intent?.getIntExtra("jumlah",0)
             totalbayar+=harga.toString().toInt()
             tvTotalBayar.text = totalbayar.toString()
+            listPesenan.add(nama!!)
+            Log.d("Pesanan",listPesenan.toString())
 
           }
+        }
+
+        mMessageReceiverKurang =  object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                val kode = intent?.getStringExtra("kode")
+                val nama = intent?.getStringExtra("nama")
+                val harga = intent?.getStringExtra("harga")
+                val jumlahItem = intent?.getIntExtra("jumlah",0)
+                totalbayar-=harga.toString().toInt()
+                tvTotalBayar.text = totalbayar.toString()
+                listPesenan.remove(nama!!)
+                Log.d("Pesanan",listPesenan.toString())
+
+            }
         }
 
 
@@ -155,9 +173,14 @@ class BayarActivity : AppCompatActivity() {
             IntentFilter("totalItemMenu")
         )
 
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverKurang,
+            IntentFilter("kurangItemMenu")
+        )
+
     }
 
     lateinit var mMessageReceiver: BroadcastReceiver
+    lateinit var mMessageReceiverKurang: BroadcastReceiver
 
 
 
