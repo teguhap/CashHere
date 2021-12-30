@@ -28,8 +28,11 @@
             android:textSize="24sp" />
 
         <ImageView
+            android:id="@+id/btnSetting"
             android:layout_width="30dp"
             android:layout_height="30dp"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="18dp"
@@ -155,7 +158,7 @@
                 <LinearLayout
                     android:layout_width="170dp"
                     android:layout_height="122dp"
-                    android:background="@drawable/bg_drink"
+                    android:background="@drawable/bg_cv_dessert"
                     android:gravity="bottom"
                     android:orientation="vertical">
 
@@ -166,7 +169,7 @@
                         android:layout_marginEnd="12dp"
                         android:layout_marginBottom="12dp"
                         android:fontFamily="@font/russo_one"
-                        android:text="Drink"
+                        android:text="Dessert"
                         android:textColor="@color/white_smooth"
                         android:textSize="16sp"
                         app:layout_constraintBottom_toBottomOf="parent"
@@ -177,42 +180,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/cv4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:elevation="8dp"
-                app:cardCornerRadius="10dp"
-                app:cardElevation="8dp"
-                android:clickable="true"
-                android:focusable="true"
-                >
-
-                <LinearLayout
-                    android:layout_width="170dp"
-                    android:layout_height="122dp"
-                    android:background="@drawable/bg_drink"
-                    android:gravity="bottom"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="end"
-                        android:layout_marginEnd="12dp"
-                        android:layout_marginBottom="12dp"
-                        android:fontFamily="@font/russo_one"
-                        android:text="Drink"
-                        android:textColor="@color/white_smooth"
-                        android:textSize="16sp"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent" />
-
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </HorizontalScrollView>
@@ -255,15 +222,16 @@
             <ImageView
                 android:layout_width="116dp"
                 android:layout_height="116dp"
-                android:src="@drawable/ic_menu"
-                android:contentDescription="@string/background" />
+                android:contentDescription="@string/background"
+                android:src="@drawable/ic_menu" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/russo_one"
                 android:text="@string/bayar"
-                android:textSize="30sp"
                 android:textColor="@color/white_smooth"
-                android:fontFamily="@font/russo_one"/>
+                android:textSize="30sp" />
 
 
         </LinearLayout>
@@ -277,12 +245,11 @@
         android:elevation="8dp"
         app:cardCornerRadius="10dp"
         app:cardElevation="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintBottom_toTopOf="@+id/tvAppName"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/cvBayar"
-        app:layout_constraintTop_toTopOf="@+id/cvBayar"
-        app:layout_constraintBottom_toTopOf="@id/cvSetting"
-        >
+        app:layout_constraintTop_toTopOf="@+id/cvBayar">
 
         <LinearLayout
             android:layout_width="170dp"
@@ -291,18 +258,19 @@
             android:gravity="center"
             android:orientation="vertical">
 
-           <ImageView
-            android:layout_width="106dp"
-            android:layout_height="106dp"
-            android:src="@drawable/ic_cv_history"
-            android:contentDescription="@string/background" />
+            <ImageView
+                android:layout_width="106dp"
+                android:layout_height="106dp"
+                android:contentDescription="@string/background"
+                android:src="@drawable/ic_cv_history" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/russo_one"
                 android:text="@string/history"
-                android:textSize="30sp"
                 android:textColor="@color/white_smooth"
-                android:fontFamily="@font/russo_one"/>
+                android:textSize="30sp" />
 
         </LinearLayout>
 
@@ -317,32 +285,7 @@
         app:cardElevation="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/cvBayar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cvBayar">
-
-        <LinearLayout
-            android:layout_width="170dp"
-            android:layout_height="match_parent"
-            android:background="@drawable/bg_cv_setting"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="98dp"
-                android:layout_height="98dp"
-                android:contentDescription="@string/background"
-                android:src="@drawable/ic_cv_setting" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/russo_one"
-                android:text="@string/setting"
-                android:textColor="@color/white_smooth"
-                android:textSize="30sp" />
-
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
+        app:layout_constraintStart_toEndOf="@+id/cvBayar"/>
 
 
     <TextView
