@@ -11,6 +11,8 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
@@ -47,6 +49,7 @@ class BayarActivity : AppCompatActivity() {
         val tvTotalBayar = findViewById<TextView>(R.id.tvTotalBayar)
         val spMetodeBayar = findViewById<Spinner>(R.id.spMetodeBayar)
         val btnBayar = findViewById<Button>(R.id.btnBayar)
+        val cvTotalBayar = findViewById<ConstraintLayout>(R.id.cvTotalBayar)
 
 
         btnBackBayar.setOnClickListener {
@@ -193,9 +196,8 @@ class BayarActivity : AppCompatActivity() {
         btnBayar.setOnClickListener {
 
             val kode = (1000..9999).random()
-
-           listPesenan.sort()
             var listPesananToStruk = ""
+           listPesenan.sort()
             for(i in 0 until listPesenan.size){
                 listPesananToStruk +=listPesenan[i]+", \n"
             }
@@ -213,6 +215,35 @@ class BayarActivity : AppCompatActivity() {
 
 
         }
+
+
+
+        cvTotalBayar.setOnClickListener {
+            val rincianView = layoutInflater.inflate(R.layout.bg_rincian_pesanan,null)
+            val tvRincianPesan = rincianView.findViewById<TextView>(R.id.tvRincianPesanan)
+            val tvTotalRincian = rincianView.findViewById<TextView>(R.id.tvTotalRincian)
+
+            listPesenan.sort()
+            var listPesananToRincian = ""
+            listPesananToRincian = ""
+            for(i in 0 until listPesenan.size){
+                listPesananToRincian +=listPesenan[i]+", \n"
+            }
+
+            tvRincianPesan.text = listPesananToRincian
+            tvTotalRincian.text = tvTotalBayar.text.toString()
+
+            val dialog = AlertDialog.Builder(this)
+            dialog.setView(rincianView)
+            dialog.setCancelable(true)
+            dialog.create()
+
+            dialog.show()
+
+
+
+        }
+
 
     }
 

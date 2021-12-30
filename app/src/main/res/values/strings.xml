@@ -21,6 +21,8 @@
     <string name="nama">Nama</string>
     <string name="coffe_latte">Coffe Latte</string>
     <string name="tambah">Tambah</string>
+    <string name="hapus">Hapus</string>
+    <string name="ubah">Ubah</string>
 
     <string-array name="metode_bayar">
         <item>Cash</item>

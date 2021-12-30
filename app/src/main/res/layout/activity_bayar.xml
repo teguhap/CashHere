@@ -197,6 +197,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
            android:id="@+id/cvTotalBayar"
+            android:clickable="true"
+            android:focusable="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:padding="16dp"

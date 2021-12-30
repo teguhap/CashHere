@@ -1,11 +1,17 @@
 package com.project.cashhere
 
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
@@ -37,10 +43,23 @@ class HistoryActivity : AppCompatActivity() {
         getHistoryData(listHistory)
 
 
+        mMessageReceiver =  object : BroadcastReceiver() {
+            override fun onReceive(context: Context?, intent: Intent?) {
+                listHistory.clear()
+                getHistoryData(listHistory)
+            }
+        }
 
+
+        //Broadcast dari RecycleAdapter
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("delete_history")
+        )
 
 
     }
+
+    lateinit var mMessageReceiver: BroadcastReceiver
 
 
     fun getHistoryData(listHistory : MutableList<ListHistory>){
@@ -57,7 +76,6 @@ class HistoryActivity : AppCompatActivity() {
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
                 val jsonArray: JSONArray = jsonObject.getJSONArray("history")
-
                 for(i in 0 until jsonArray.length()){
                     val jsonInner : JSONObject = jsonArray.getJSONObject(i)
                     val kode = jsonInner.get("kode").toString()

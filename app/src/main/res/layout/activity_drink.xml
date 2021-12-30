@@ -177,6 +177,46 @@
             android:background="@drawable/bg_et_addname"
             />
 
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/llUpdateDeleteDrink"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:visibility="gone"
+            android:orientation="horizontal">
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnDeleteDrink"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:background="@drawable/bg_btn_addname"
+                android:text="@string/hapus"
+                android:textColor="@color/white_smooth"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toStartOf="@+id/btnUpdateDrink"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatButton
+                android:id="@+id/btnUpdateDrink"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_btn_addname"
+                android:text="@string/ubah"
+                android:textColor="@color/white_smooth"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/btnDeleteDrink"
+                app:layout_constraintTop_toTopOf="@+id/btnDeleteDrink" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
         <androidx.appcompat.widget.AppCompatButton
             android:id="@+id/btnSimpanDrink"
