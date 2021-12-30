@@ -29,7 +29,7 @@
         android:id="@+id/etKodeUpdate"
         android:layout_width="match_parent"
         android:layout_height="40dp"
-        android:textColor="@color/hijau_utama"
+        android:textColor="#444948"
         android:focusable="false"
         android:layout_marginTop="2dp"
         android:paddingStart="12dp"

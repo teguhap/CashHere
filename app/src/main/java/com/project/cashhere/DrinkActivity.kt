@@ -10,7 +10,6 @@ import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -24,6 +23,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyError
+import com.project.cashhere.adapter.AdapterRecycleViewDrink
+import com.project.cashhere.dataclass.ListItem
 import org.json.JSONException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -97,6 +98,7 @@ class DrinkActivity : AppCompatActivity() {
 
 
 //ADD ITEM FOOD
+
         btnSimpan.setOnClickListener {
             val kode = etKode.text.toString()
             val nama = etNama.text.toString()
@@ -151,7 +153,12 @@ class DrinkActivity : AppCompatActivity() {
 
         val mMessageReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
-           getDrinkData(listDrink, displayListDrink)
+                val kode = intent?.getStringExtra("kode")
+                val nama = intent?.getStringExtra("nama")
+                val harga = intent?.getStringExtra("harga")
+
+                addDrinkData(kode!!,nama!!,harga!!)
+            getDrinkData(listDrink, displayListDrink)
 
             }
         }
@@ -189,6 +196,7 @@ class DrinkActivity : AppCompatActivity() {
                 }
 
                 displayListDrink.addAll(listDrink)
+                displayListDrink.sortBy { it.nama }
                 val adapter  = AdapterRecycleViewDrink(displayListDrink)
                 rvDrink.adapter = adapter
                 rvDrink.layoutManager = LinearLayoutManager(this)

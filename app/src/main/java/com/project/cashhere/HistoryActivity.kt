@@ -6,9 +6,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Button
 import android.widget.ImageView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -17,6 +15,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.project.cashhere.adapter.AdapterRecycleViewHistory
+import com.project.cashhere.dataclass.ListHistory
 import org.json.JSONArray
 import org.json.JSONObject
 import java.util.ArrayList
@@ -72,7 +72,6 @@ class HistoryActivity : AppCompatActivity() {
                     response ->
 
                 val rvHistory = findViewById<RecyclerView>(R.id.rvHistory)
-                var listPesanan = ""
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
                 val jsonArray: JSONArray = jsonObject.getJSONArray("history")

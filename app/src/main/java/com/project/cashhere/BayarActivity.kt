@@ -1,6 +1,5 @@
 package com.project.cashhere
 
-import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
@@ -9,14 +8,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
-import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Request
@@ -24,6 +21,8 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.android.volley.toolbox.Volley
+import com.project.cashhere.adapter.AdapterRecycleViewBayar
+import com.project.cashhere.dataclass.ListItem
 import org.json.JSONArray
 import org.json.JSONException
 import org.json.JSONObject
@@ -252,7 +251,7 @@ class BayarActivity : AppCompatActivity() {
 
 
 
-    fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
+    fun getFoodData(listFood : MutableList<ListItem>, displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
 

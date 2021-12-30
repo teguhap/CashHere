@@ -11,7 +11,6 @@ import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
@@ -25,6 +24,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyError
+import com.project.cashhere.adapter.AdapterRecycleView
+import com.project.cashhere.dataclass.ListItem
 import org.json.JSONException
 import java.util.*
 import kotlin.collections.ArrayList
@@ -155,6 +156,11 @@ class FoodActivity : AppCompatActivity() {
 
         val mMessageReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
+                val kode = intent?.getStringExtra("kode")
+                val nama = intent?.getStringExtra("nama")
+                val harga = intent?.getStringExtra("harga")
+
+                addFoodData(kode!!,nama!!,harga!!)
             getFoodData(listFood, displayListFood)
             }
         }
@@ -168,7 +174,7 @@ class FoodActivity : AppCompatActivity() {
 
 
     //FUNCTION MENGAMBIL DATA ITEM FOOD DARI DATABASE
-    fun getFoodData(listFood : MutableList<ListItem>,displayListFood : MutableList<ListItem>){
+    fun getFoodData(listFood : MutableList<ListItem>, displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
         val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
 
@@ -191,6 +197,7 @@ class FoodActivity : AppCompatActivity() {
                 }
 
                 displayListFood.addAll(listFood)
+                displayListFood.sortBy { it.nama }
                 val adapter  = AdapterRecycleView(displayListFood)
                 rvFood.adapter = adapter
                 rvFood.layoutManager = LinearLayoutManager(this)

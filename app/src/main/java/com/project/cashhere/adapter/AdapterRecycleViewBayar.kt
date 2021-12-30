@@ -1,8 +1,6 @@
-package com.project.cashhere
+package com.project.cashhere.adapter
 
-import android.content.Context
 import android.content.Intent
-import android.view.ContextMenu
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +9,8 @@ import android.widget.*
 import androidx.cardview.widget.CardView
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
+import com.project.cashhere.dataclass.ListItem
+import com.project.cashhere.R
 
 
 class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adapter<AdapterRecycleViewBayar.ViewHolderView>() {
@@ -36,7 +36,7 @@ class AdapterRecycleViewBayar(val listData : List<ListItem>) : RecyclerView.Adap
             val intent = Intent("totalItemMenu")
 
 
-            val fadeInAnim = AnimationUtils.loadAnimation(context,R.anim.fade_in)
+            val fadeInAnim = AnimationUtils.loadAnimation(context, R.anim.fade_in)
 
             var jumlahItem = 0
 
