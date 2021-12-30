@@ -1,13 +1,19 @@
 package com.project.cashhere
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -23,6 +29,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class DrinkActivity : AppCompatActivity() {
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_drink)
@@ -138,7 +146,23 @@ class DrinkActivity : AppCompatActivity() {
             getDrinkData(listDrink,displayListDrink)
         }
 
+
+
+
+        val mMessageReceiver = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+           getDrinkData(listDrink, displayListDrink)
+
+            }
+        }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("dataUpdate")
+        )
+
+
     }
+
 
 
 
@@ -154,7 +178,8 @@ class DrinkActivity : AppCompatActivity() {
                 val strResponse = response.toString()
                 val jsonObject = JSONObject(strResponse)
                 val jsonArray:JSONArray = jsonObject.getJSONArray("drink")
-
+                listDrink.clear()
+                displayListDrink.clear()
                 for(i in 0 until jsonArray.length()){
                     val jsonInner : JSONObject = jsonArray.getJSONObject(i)
                     val kode = jsonInner.get("kode").toString()
@@ -164,7 +189,7 @@ class DrinkActivity : AppCompatActivity() {
                 }
 
                 displayListDrink.addAll(listDrink)
-                val adapter  = AdapterRecycleView(displayListDrink)
+                val adapter  = AdapterRecycleViewDrink(displayListDrink)
                 rvDrink.adapter = adapter
                 rvDrink.layoutManager = LinearLayoutManager(this)
                 rvDrink.setHasFixedSize(true)
@@ -205,4 +230,5 @@ class DrinkActivity : AppCompatActivity() {
 
         Toast.makeText(this,"Data Berhasil Terimpan",Toast.LENGTH_SHORT).show()
     }
+
 }

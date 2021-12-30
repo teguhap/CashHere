@@ -1,14 +1,20 @@
 package com.project.cashhere
 
 import android.annotation.SuppressLint
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
 import com.android.volley.toolbox.StringRequest
@@ -41,7 +47,6 @@ class FoodActivity : AppCompatActivity() {
         val rvFood = findViewById<RecyclerView>(R.id.rv_food)
         val llFood = findViewById<LinearLayout>(R.id.llAddItemFood)
 
-        val fadeInAnim = AnimationUtils.loadAnimation(this,R.anim.fade_in)
         val slideInAnim = AnimationUtils.loadAnimation(this,R.anim.slide_in)
 
 
@@ -145,6 +150,19 @@ class FoodActivity : AppCompatActivity() {
             getFoodData(listFood,displayListFood)
         }
 
+
+
+
+        val mMessageReceiver = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+            getFoodData(listFood, displayListFood)
+            }
+        }
+
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
+            IntentFilter("dataUpdate")
+        )
+
     }
 
 
@@ -162,7 +180,8 @@ class FoodActivity : AppCompatActivity() {
                 val strRespon = response.toString()
                 val jsonObject = JSONObject(strRespon)
                 val jsonArray:JSONArray = jsonObject.getJSONArray("food")
-
+                listFood.clear()
+                displayListFood.clear()
                 for(i in 0 until jsonArray.length()){
                     val jsonInner : JSONObject = jsonArray.getJSONObject(i)
                     val kode = jsonInner.get("kode").toString()
@@ -214,4 +233,10 @@ class FoodActivity : AppCompatActivity() {
 
         Toast.makeText(this,"Data Berhasil Terimpan",Toast.LENGTH_SHORT).show()
     }
+
+
+
+
+
+
 }
