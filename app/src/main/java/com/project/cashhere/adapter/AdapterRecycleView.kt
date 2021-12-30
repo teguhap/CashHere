@@ -61,14 +61,19 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
             etKodeUpdate.setText(kode.text)
             etNamaUpdate.setText(nama.text)
             etHargaUpdate.setText(harga.text)
+            val intent = Intent("dataUpdate")
 
             btnDelete.setOnClickListener {
+                val kodeUpdate = etKodeUpdate.text.toString()
+                val namaUpdate = etNamaUpdate.text.toString()
+                val hargaUpdate = etHargaUpdate.text.toString()
+                intent.putExtra("kode",kodeUpdate)
+                intent.putExtra("nama",namaUpdate)
+                intent.putExtra("harga",hargaUpdate)
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+
                 deleteFoodData(etKodeUpdate.text.toString())
                 dialog.dismiss()
-
-                Intent("dataUpdate").also{
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
-                }
             }
 
             btnUpdateDialog.setOnClickListener {
@@ -76,12 +81,12 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
                 val namaUpdate = etNamaUpdate.text.toString()
                 val hargaUpdate = etHargaUpdate.text.toString()
 
-                Intent("dataUpdate").also{
-                    it.putExtra("kode",kodeUpdate)
-                    it.putExtra("nama",namaUpdate)
-                    it.putExtra("harga",hargaUpdate)
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
-                }
+
+                intent.putExtra("kode",kodeUpdate)
+                intent.putExtra("nama",namaUpdate)
+                intent.putExtra("harga",hargaUpdate)
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+
                 deleteFoodData(kodeUpdate)
                 dialog.dismiss()
 
@@ -100,7 +105,7 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
     }
 
     fun deleteFoodData(kode:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"food_delete&kode=$kode"
 
         val stringRequest = object : StringRequest(
@@ -131,35 +136,6 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
         Sender.instance!!.addToRequestQueue(stringRequest)
     }
 
-    fun updateFoodData(kode:String,nama:String,harga:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
-        val ACTION = BASE_URL+"food_update&kode=$kode&nama=$nama&harga=$harga"
-
-        val stringRequest = object : StringRequest(
-            Request.Method.GET,ACTION,
-            Response.Listener<String>{ response ->
-                try{
-                    val obj = JSONObject(response)
-                    Log.i("hasil",obj.getString("message"))
-                }catch(e: JSONException){
-                    e.printStackTrace()
-                }
-            },
-            object : Response.ErrorListener{
-                override fun onErrorResponse(error: VolleyError?) {
-                    Log.e(
-                        "hasil : ",error!!.message.toString()
-                    )
-                }
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String,String>()
-                return params
-            }}
-
-        Sender.instance!!.addToRequestQueue(stringRequest)
-    }
 
 
 }

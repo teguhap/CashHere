@@ -153,7 +153,6 @@ class FoodActivity : AppCompatActivity() {
 
 
 
-
         val mMessageReceiver = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
                 val kode = intent?.getStringExtra("kode")
@@ -161,7 +160,7 @@ class FoodActivity : AppCompatActivity() {
                 val harga = intent?.getStringExtra("harga")
 
                 addFoodData(kode!!,nama!!,harga!!)
-            getFoodData(listFood, displayListFood)
+                getFoodData(listFood, displayListFood)
             }
         }
 
@@ -176,7 +175,7 @@ class FoodActivity : AppCompatActivity() {
     //FUNCTION MENGAMBIL DATA ITEM FOOD DARI DATABASE
     fun getFoodData(listFood : MutableList<ListItem>, displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
+        val url = "https://cashhere.kspkitasemua.xyz/index.php?op=food_view"
 
         val stringRequest = StringRequest(Request.Method.GET,url,
             {
@@ -211,7 +210,7 @@ class FoodActivity : AppCompatActivity() {
 
     //FUNCTION MENAMBAH DATA ITEM FOOD KE DATABASE
     fun addFoodData(kode:String,nama:String,harga:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"food_create&kode=$kode&nama=$nama&harga=$harga"
 
         val stringRequest = object : StringRequest(Request.Method.GET,ACTION,

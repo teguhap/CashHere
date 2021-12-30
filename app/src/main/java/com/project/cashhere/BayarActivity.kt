@@ -74,47 +74,6 @@ class BayarActivity : AppCompatActivity() {
         getFoodData(listFood,displayListFood)
         getDrinkData(listDrink,displayListDrink)
 
-        //SEARCH VIEW ITEM
-//        svBayar.setOnQueryTextListener(object : androidx.appcompat.widget.SearchView.OnQueryTextListener{
-//            override fun onQueryTextSubmit(query: String?): Boolean {
-//                return false
-//            }
-//
-//            @SuppressLint("NotifyDataSetChanged")
-//            override fun onQueryTextChange(newText: String?): Boolean {
-//
-//                if(newText!!.isNotEmpty()){
-//                    displayListFood.clear()
-//                    displayListDrink.clear()
-//                    val search = newText.lowercase(Locale.getDefault())
-//                    listFood.forEach {
-//                        if(it.nama.lowercase(Locale.getDefault()).contains(search)
-//                            ||it.kode.lowercase(Locale.getDefault()).contains(search)
-//                            ||it.harga.lowercase(Locale.getDefault()).contains(search)) {
-//                            displayListFood.add(it)
-//                        }
-//                        rvBayarFood.adapter!!.notifyDataSetChanged()
-//
-//                    }
-//
-//                    listDrink.forEach {
-//                        if(it.nama.lowercase(Locale.getDefault()).contains(search)
-//                            ||it.kode.lowercase(Locale.getDefault()).contains(search)
-//                            ||it.harga.lowercase(Locale.getDefault()).contains(search)) {
-//                            displayListDrink.add(it)
-//                        }
-//                        rvBayarDrink.adapter!!.notifyDataSetChanged()
-//                    }
-//
-//                }else{
-//
-//                    rvBayarFood.adapter!!.notifyDataSetChanged()
-//                    rvBayarDrink.adapter!!.notifyDataSetChanged()
-//                }
-//                return true;
-//            }
-//        })
-
 
 
 
@@ -253,7 +212,7 @@ class BayarActivity : AppCompatActivity() {
 
     fun getFoodData(listFood : MutableList<ListItem>, displayListFood : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=food_view"
+        val url = "https://cashhere.kspkitasemua.xyz/index.php?op=food_view"
 
         val stringRequest = StringRequest(
             Request.Method.GET,url,
@@ -289,7 +248,7 @@ class BayarActivity : AppCompatActivity() {
 
     fun getDrinkData(listDrink : MutableList<ListItem>, displayListDrink : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=drink_view"
+        val url = "https://cashhere.kspkitasemua.xyz/index.php?op=drink_view"
 
         val stringRequest = StringRequest(Request.Method.GET,url,
             {          response ->
@@ -322,7 +281,7 @@ class BayarActivity : AppCompatActivity() {
     //FUNCTION MENAMBAH DATA BAYAR PESANAN F
     // OOD KE DATABASE
     fun addHistoryPesanan(kode:String,pesanan:String,metodeBayar:String,total : String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"history_create&kode=$kode&pesanan=$pesanan&metode_bayar=$metodeBayar&total_bayar=$total"
 
         val stringRequest = object : StringRequest(Request.Method.GET,ACTION,

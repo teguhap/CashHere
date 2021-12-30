@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
@@ -48,6 +49,8 @@ class DrinkActivity : AppCompatActivity() {
         val svDrink = findViewById<SearchView>(R.id.svDrink)
         val rvDrink = findViewById<RecyclerView>(R.id.rv_Drink)
         val llDrink = findViewById<LinearLayout>(R.id.llAddItemDrink)
+
+        val slideInAnim = AnimationUtils.loadAnimation(this,R.anim.slide_in)
 
 
         //INISIALISASI DARI LAYOUT (Tambah Menu)
@@ -129,6 +132,8 @@ class DrinkActivity : AppCompatActivity() {
             rvDrink.visibility = View.GONE
             svDrink.visibility = View.GONE
             llDrink.visibility = View.VISIBLE
+            llDrink.animation = slideInAnim
+            llDrink.animation.start()
             btnAdd.visibility = View.GONE
             btnCancel.visibility = View.VISIBLE
             etNama.text.clear()
@@ -164,7 +169,7 @@ class DrinkActivity : AppCompatActivity() {
         }
 
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-            IntentFilter("dataUpdate")
+            IntentFilter("dataUpdateDrink")
         )
 
 
@@ -176,7 +181,7 @@ class DrinkActivity : AppCompatActivity() {
     //FUNCTION MENGAMBIL DATA ITEM FOOD DARI DATABASE
     fun getDrinkData(listDrink : MutableList<ListItem>, displayListDrink : MutableList<ListItem>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=drink_view"
+        val url = "https://cashhere.kspkitasemua.xyz/index.php?op=drink_view"
 
         val stringRequest = StringRequest(Request.Method.GET,url,
             {          response ->
@@ -209,7 +214,7 @@ class DrinkActivity : AppCompatActivity() {
 
     //FUNCTION MENAMBAH DATA ITEM FOOD KE DATABASE
     fun addDrinkData(kode:String, nama:String, harga:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"drink_create&kode=$kode&nama=$nama&harga=$harga"
 
         val stringRequest = object : StringRequest(Request.Method.GET,ACTION,

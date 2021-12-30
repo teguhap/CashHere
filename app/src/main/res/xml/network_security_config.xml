@@ -3,7 +3,7 @@
     <domain-config cleartextTrafficPermitted="true"
         tools:ignore="NetworkSecurityConfig">
         <domain includeSubdomains="true">
-            http://192.168.43.55/
+            https://cashhere.kspkitasemua.xyz/
         </domain>
     </domain-config>
 

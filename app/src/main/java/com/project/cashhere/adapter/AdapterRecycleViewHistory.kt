@@ -62,7 +62,7 @@ class AdapterRecycleViewHistory(val listData : List<ListHistory>) : RecyclerView
     }
 
     fun deleteHistoryData(kode:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"history_delete&kode=$kode"
 
         val stringRequest = object : StringRequest(

@@ -64,7 +64,7 @@ class HistoryActivity : AppCompatActivity() {
 
     fun getHistoryData(listHistory : MutableList<ListHistory>){
         val queue = Volley.newRequestQueue(this)
-        val url = "http://192.168.43.55/cash_here/index.php?op=history_view"
+        val url = "https://cashhere.kspkitasemua.xyz/index.php?op=history_view"
 
         val stringRequest = StringRequest(
             Request.Method.GET,url,

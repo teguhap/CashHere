@@ -67,12 +67,20 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
             etHargaUpdate.setText(harga.text)
 
             btnDelete.setOnClickListener {
+                val kodeUpdate = etKodeUpdate.text.toString()
+                val namaUpdate = etNamaUpdate.text.toString()
+                val hargaUpdate = etHargaUpdate.text.toString()
+
+                Intent("dataUpdateDrink").also{
+                    it.putExtra("kode",kodeUpdate)
+                    it.putExtra("nama",namaUpdate)
+                    it.putExtra("harga",hargaUpdate)
+                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
+                }
                     deleteDrinkData(etKodeUpdate.text.toString())
                     dialog.dismiss()
 
-                Intent("dataUpdate").also{
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
-                }
+
             }
 
             btnUpdateDialog.setOnClickListener {
@@ -80,7 +88,7 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
                 val namaUpdate = etNamaUpdate.text.toString()
                 val hargaUpdate = etHargaUpdate.text.toString()
 
-                Intent("dataUpdate").also{
+                Intent("dataUpdateDrink").also{
                     it.putExtra("kode",kodeUpdate)
                     it.putExtra("nama",namaUpdate)
                     it.putExtra("harga",hargaUpdate)
@@ -106,7 +114,7 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
 
 
     fun deleteDrinkData(kode: String) {
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
+        val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"drink_delete&kode=$kode"
 
         val stringRequest = object : StringRequest(
@@ -137,33 +145,6 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
         Sender.instance!!.addToRequestQueue(stringRequest)
     }
 
-    fun updateDrinkData(kode:String,nama:String,harga:String){
-        val BASE_URL = "http://192.168.43.55/cash_here/index.php?op="
-        val ACTION = BASE_URL+"drink_create&kode=$kode&nama=$nama&harga=$harga"
 
-        val stringRequest = object : StringRequest(Request.Method.GET,ACTION,
-            Response.Listener<String>{ response ->
-                try{
-                    val obj = JSONObject(response)
-                    Log.i("hasil",obj.getString("message"))
-                }catch(e: JSONException){
-                    e.printStackTrace()
-                }
-            },
-            object : Response.ErrorListener{
-                override fun onErrorResponse(error: VolleyError?) {
-                    Log.e(
-                        "hasil : ",error!!.message.toString()
-                    )
-                }
-            }) {
-            @Throws(AuthFailureError::class)
-            override fun getParams(): MutableMap<String, String> {
-                val params = HashMap<String,String>()
-                return params
-            }}
-
-        Sender.instance!!.addToRequestQueue(stringRequest)
-    }
 
 }
