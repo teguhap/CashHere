@@ -112,10 +112,8 @@ class BayarActivity : AppCompatActivity() {
 
         mMessageReceiver =  object : BroadcastReceiver() {
         override fun onReceive(context: Context?, intent: Intent?) {
-            val kode = intent?.getStringExtra("kode")
             val nama = intent?.getStringExtra("nama")
             val harga = intent?.getStringExtra("harga")
-            val jumlahItem = intent?.getIntExtra("jumlah",0)
             totalbayar+=harga.toString().toInt()
             tvTotalBayar.text = totalbayar.toString()
             listPesenan.add(nama!!)
@@ -126,10 +124,8 @@ class BayarActivity : AppCompatActivity() {
 
         mMessageReceiverKurang =  object : BroadcastReceiver() {
             override fun onReceive(context: Context?, intent: Intent?) {
-                val kode = intent?.getStringExtra("kode")
                 val nama = intent?.getStringExtra("nama")
                 val harga = intent?.getStringExtra("harga")
-                val jumlahItem = intent?.getIntExtra("jumlah",0)
                 totalbayar-=harga.toString().toInt()
                 tvTotalBayar.text = totalbayar.toString()
                 listPesenan.remove(nama!!)

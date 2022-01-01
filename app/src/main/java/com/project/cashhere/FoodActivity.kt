@@ -1,18 +1,21 @@
 package com.project.cashhere
 
 import android.annotation.SuppressLint
+import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
+import androidx.loader.content.Loader
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -151,6 +154,11 @@ class FoodActivity : AppCompatActivity() {
             getFoodData(listFood,displayListFood)
         }
 
+        //LOADER
+        val loader = ProgressDialog(this)
+        loader.setTitle("Tunggu Sebentar")
+        loader.setCanceledOnTouchOutside(false)
+
 
 
         val mMessageReceiver = object : BroadcastReceiver(){
@@ -160,13 +168,20 @@ class FoodActivity : AppCompatActivity() {
                 val harga = intent?.getStringExtra("harga")
 
                 addFoodData(kode!!,nama!!,harga!!)
-                getFoodData(listFood, displayListFood)
+                loader.show()
+                Handler().postDelayed({getFoodData(listFood, displayListFood)
+                                      loader.dismiss()
+                                      },4000L)
+
             }
         }
 
         val mMessageReceiverDelete = object : BroadcastReceiver(){
             override fun onReceive(context: Context?, intent: Intent?) {
-                getFoodData(listFood, displayListFood)
+                loader.show()
+                Handler().postDelayed({getFoodData(listFood, displayListFood)
+                    loader.dismiss()
+                },4000L)
             }
         }
 
