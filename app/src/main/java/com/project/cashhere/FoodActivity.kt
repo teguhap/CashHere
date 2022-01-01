@@ -164,8 +164,18 @@ class FoodActivity : AppCompatActivity() {
             }
         }
 
+        val mMessageReceiverDelete = object : BroadcastReceiver(){
+            override fun onReceive(context: Context?, intent: Intent?) {
+                getFoodData(listFood, displayListFood)
+            }
+        }
+
+
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
             IntentFilter("dataUpdate")
+        )
+        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverDelete,
+            IntentFilter("dataDelete")
         )
 
     }

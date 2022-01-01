@@ -61,17 +61,11 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
             etKodeUpdate.setText(kode.text)
             etNamaUpdate.setText(nama.text)
             etHargaUpdate.setText(harga.text)
-            val intent = Intent("dataUpdate")
+
 
             btnDelete.setOnClickListener {
-                val kodeUpdate = etKodeUpdate.text.toString()
-                val namaUpdate = etNamaUpdate.text.toString()
-                val hargaUpdate = etHargaUpdate.text.toString()
-                intent.putExtra("kode",kodeUpdate)
-                intent.putExtra("nama",namaUpdate)
-                intent.putExtra("harga",hargaUpdate)
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-
+                val intent2 = Intent("dataDelete")
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2)
                 deleteFoodData(etKodeUpdate.text.toString())
                 dialog.dismiss()
             }
@@ -82,14 +76,13 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
                 val hargaUpdate = etHargaUpdate.text.toString()
 
 
+                val intent = Intent("dataUpdate")
                 intent.putExtra("kode",kodeUpdate)
                 intent.putExtra("nama",namaUpdate)
                 intent.putExtra("harga",hargaUpdate)
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
-
                 deleteFoodData(kodeUpdate)
                 dialog.dismiss()
-
+                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
             }
 
             btnUpdate.setOnClickListener {

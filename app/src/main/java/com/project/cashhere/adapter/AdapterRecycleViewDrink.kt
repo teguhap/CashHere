@@ -67,14 +67,7 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
             etHargaUpdate.setText(harga.text)
 
             btnDelete.setOnClickListener {
-                val kodeUpdate = etKodeUpdate.text.toString()
-                val namaUpdate = etNamaUpdate.text.toString()
-                val hargaUpdate = etHargaUpdate.text.toString()
-
-                Intent("dataUpdateDrink").also{
-                    it.putExtra("kode",kodeUpdate)
-                    it.putExtra("nama",namaUpdate)
-                    it.putExtra("harga",hargaUpdate)
+                Intent("dataDeleteDrink").also{
                     LocalBroadcastManager.getInstance(context).sendBroadcast(it)
                 }
                     deleteDrinkData(etKodeUpdate.text.toString())
@@ -88,14 +81,15 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
                 val namaUpdate = etNamaUpdate.text.toString()
                 val hargaUpdate = etHargaUpdate.text.toString()
 
+
+                deleteDrinkData(kodeUpdate)
+                dialog.dismiss()
                 Intent("dataUpdateDrink").also{
                     it.putExtra("kode",kodeUpdate)
                     it.putExtra("nama",namaUpdate)
                     it.putExtra("harga",hargaUpdate)
                     LocalBroadcastManager.getInstance(context).sendBroadcast(it)
                 }
-                deleteDrinkData(kodeUpdate)
-                dialog.dismiss()
             }
 
 
