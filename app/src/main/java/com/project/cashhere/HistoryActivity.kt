@@ -36,25 +36,8 @@ class HistoryActivity : AppCompatActivity() {
             finish()
         }
 
-
-
         val listHistory = ArrayList<ListHistory>()
-
         getHistoryData(listHistory)
-
-
-        mMessageReceiver =  object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                listHistory.clear()
-                getHistoryData(listHistory)
-            }
-        }
-
-
-        //Broadcast dari RecycleAdapter
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-            IntentFilter("delete_history")
-        )
 
 
     }

@@ -155,33 +155,6 @@ class DrinkActivity : AppCompatActivity() {
 
 
 
-
-        val mMessageReceiver = object : BroadcastReceiver() {
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val kode = intent?.getStringExtra("kode")
-                val nama = intent?.getStringExtra("nama")
-                val harga = intent?.getStringExtra("harga")
-
-                addDrinkData(kode!!, nama!!, harga!!)
-                getDrinkData(listDrink, displayListDrink)
-
-            }
-
-
-        }
-
-           val mMessageReceiverDelete = object : BroadcastReceiver(){
-                override fun onReceive(context: Context?, intent: Intent?) {
-                    getDrinkData(listDrink, displayListDrink)
-                }
-        }
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-            IntentFilter("dataUpdateDrink"))
-
-          LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverDelete,
-            IntentFilter("dataDeleteDrink"))
-
     }
 
 

@@ -1,17 +1,21 @@
 package com.project.cashhere.adapter
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.project.cashhere.DashboardActivity
 import com.project.cashhere.dataclass.ListHistory
 import com.project.cashhere.R
 import com.project.cashhere.Sender
@@ -46,11 +50,13 @@ class AdapterRecycleViewHistory(val listData : List<ListHistory>) : RecyclerView
             metodeBayar.text = curItem.metodeBayar
             totalBayar.text = curItem.totalBayar
 
-            val intent = Intent("delete_history")
 
             btnDelete.setOnClickListener {
                 deleteHistoryData(curItem.kode)
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+                Intent(context, DashboardActivity :: class.java).also {
+                    ContextCompat.startActivity(context, it, Bundle.EMPTY)
+                    ((context as Activity).finish())
+                }
                 Toast.makeText(context,"History Terhapus",Toast.LENGTH_SHORT).show()
             }
         }

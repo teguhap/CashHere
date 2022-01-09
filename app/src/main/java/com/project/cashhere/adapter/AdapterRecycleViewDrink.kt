@@ -1,6 +1,8 @@
 package com.project.cashhere.adapter
 
+import android.app.Activity
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -8,6 +10,7 @@ import android.view.View.inflate
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -15,6 +18,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.project.cashhere.DashboardActivity
 import com.project.cashhere.dataclass.ListItem
 import com.project.cashhere.R
 import com.project.cashhere.Sender
@@ -67,12 +71,13 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
             etHargaUpdate.setText(harga.text)
 
             btnDelete.setOnClickListener {
-                Intent("dataDeleteDrink").also{
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
-                }
-                    deleteDrinkData(etKodeUpdate.text.toString())
-                    dialog.dismiss()
 
+                deleteDrinkData(etKodeUpdate.text.toString())
+                dialog.dismiss()
+                Intent(context, DashboardActivity :: class.java).also {
+                      ContextCompat.startActivity(context, it, Bundle.EMPTY)
+                      ((context as Activity).finish())
+                    }
 
             }
 
@@ -81,17 +86,15 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
                 val namaUpdate = etNamaUpdate.text.toString()
                 val hargaUpdate = etHargaUpdate.text.toString()
 
-
-                deleteDrinkData(kodeUpdate)
+                updateDrinkData(kodeUpdate,namaUpdate,hargaUpdate)
                 dialog.dismiss()
-                Intent("dataUpdateDrink").also{
-                    it.putExtra("kode",kodeUpdate)
-                    it.putExtra("nama",namaUpdate)
-                    it.putExtra("harga",hargaUpdate)
-                    LocalBroadcastManager.getInstance(context).sendBroadcast(it)
-                }
-            }
 
+                Intent(context,DashboardActivity :: class.java).also {
+                    ContextCompat.startActivity(context, it, Bundle.EMPTY)
+                    ((context as Activity).finish())
+                }
+
+            }
 
 
             btnUpdate.setOnClickListener {
@@ -110,6 +113,38 @@ class AdapterRecycleViewDrink(val listData : List<ListItem>) : RecyclerView.Adap
     fun deleteDrinkData(kode: String) {
         val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"drink_delete&kode=$kode"
+
+        val stringRequest = object : StringRequest(
+            Method.GET,ACTION,
+            Response.Listener<String>{
+
+                    response ->
+                try{
+                    val obj = JSONObject(response)
+                    Log.i("hasil",obj.getString("message"))
+                }catch(e: JSONException){
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener{
+                override fun onErrorResponse(error: VolleyError?) {
+                    Log.e(
+                        "hasil : ",error!!.message.toString()
+                    )
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String,String>()
+                return params
+            }}
+
+        Sender.instance!!.addToRequestQueue(stringRequest)
+    }
+
+
+    fun updateDrinkData(kode:String,nama:String,harga:String){
+        val ACTION = "https://cashhere.kspkitasemua.xyz/index.php?op=drink_update&kode=$kode&nama=$nama&harga=$harga"
 
         val stringRequest = object : StringRequest(
             Method.GET,ACTION,

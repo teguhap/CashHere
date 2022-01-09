@@ -1,6 +1,7 @@
 package com.project.cashhere
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.app.ProgressDialog
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -15,7 +16,6 @@ import android.view.animation.AnimationUtils
 import android.widget.*
 import androidx.appcompat.widget.SearchView
 import androidx.core.content.ContextCompat
-import androidx.loader.content.Loader
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.android.volley.Request
@@ -34,6 +34,8 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 class FoodActivity : AppCompatActivity() {
+
+    lateinit var loading : ProgressDialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_food)
@@ -59,6 +61,13 @@ class FoodActivity : AppCompatActivity() {
         val etKode = findViewById<EditText>(R.id.etKodeFood)
         val etNama = findViewById<EditText>(R.id.etNamaFood)
         val etHarga = findViewById<EditText>(R.id.etHargaFood)
+
+
+        //LOADER
+        loading = ProgressDialog(this)
+        loading.setTitle("Tunggu Sebentar")
+        loading.setCanceledOnTouchOutside(false)
+        loading.show()
 
 
 //VIEW ITEM FOOD
@@ -104,6 +113,7 @@ class FoodActivity : AppCompatActivity() {
 
 //ADD ITEM FOOD
         btnSimpan.setOnClickListener {
+            loading.show()
             val kode = etKode.text.toString()
             val nama = etNama.text.toString()
             val harga = etHarga.text.toString()
@@ -114,6 +124,11 @@ class FoodActivity : AppCompatActivity() {
             etKode.setText(kodeRandom.toString())
             etNama.text.clear()
             etHarga.text.clear()
+
+            Intent(this,DashboardActivity :: class.java).also {
+              startActivity(it)
+                 finish()
+            }
 
         }
 
@@ -143,6 +158,7 @@ class FoodActivity : AppCompatActivity() {
 
         //BUTTON CANCEL DI TOOLBAR
         btnCancel.setOnClickListener {
+            loading.show()
             rvFood.visibility = View.VISIBLE
             svFood.visibility = View.VISIBLE
             llFood.visibility = View.GONE
@@ -154,46 +170,8 @@ class FoodActivity : AppCompatActivity() {
             getFoodData(listFood,displayListFood)
         }
 
-        //LOADER
-        val loader = ProgressDialog(this)
-        loader.setTitle("Tunggu Sebentar")
-        loader.setCanceledOnTouchOutside(false)
 
-
-
-        val mMessageReceiver = object : BroadcastReceiver(){
-            override fun onReceive(context: Context?, intent: Intent?) {
-                val kode = intent?.getStringExtra("kode")
-                val nama = intent?.getStringExtra("nama")
-                val harga = intent?.getStringExtra("harga")
-
-                addFoodData(kode!!,nama!!,harga!!)
-                loader.show()
-                Handler().postDelayed({getFoodData(listFood, displayListFood)
-                                      loader.dismiss()
-                                      },4000L)
-
-            }
-        }
-
-        val mMessageReceiverDelete = object : BroadcastReceiver(){
-            override fun onReceive(context: Context?, intent: Intent?) {
-                loader.show()
-                Handler().postDelayed({getFoodData(listFood, displayListFood)
-                    loader.dismiss()
-                },4000L)
-            }
-        }
-
-
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver,
-            IntentFilter("dataUpdate")
-        )
-        LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiverDelete,
-            IntentFilter("dataDelete")
-        )
-
-    }
+    }//tutup Oncreate
 
 
 
@@ -226,9 +204,9 @@ class FoodActivity : AppCompatActivity() {
                 rvFood.adapter = adapter
                 rvFood.layoutManager = LinearLayoutManager(this)
                 rvFood.setHasFixedSize(true)
-
-
+                loading.dismiss()
             }, {})
+
             queue.add(stringRequest)
     }
 
@@ -243,6 +221,8 @@ class FoodActivity : AppCompatActivity() {
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
+                    Toast.makeText(this,obj.getString("message"),Toast.LENGTH_SHORT).show()
+                    loading.dismiss()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
@@ -262,12 +242,6 @@ class FoodActivity : AppCompatActivity() {
 
         Sender.instance!!.addToRequestQueue(stringRequest)
 
-        Toast.makeText(this,"Data Berhasil Terimpan",Toast.LENGTH_SHORT).show()
     }
-
-
-
-
-
 
 }

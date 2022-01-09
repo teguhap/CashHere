@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         Handler().postDelayed({ Intent(this,DashboardActivity:: class.java).also {
             startActivity(it)
             finish()
-        } },3000L)
+        } },2000L)
     }
 
 }

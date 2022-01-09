@@ -1,12 +1,16 @@
 package com.project.cashhere.adapter
 
+import android.app.Activity
+import android.content.Context
 import android.content.Intent
+import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat.startActivity
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.RecyclerView
 import com.android.volley.AuthFailureError
@@ -14,6 +18,7 @@ import com.android.volley.Request
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
+import com.project.cashhere.DashboardActivity
 import com.project.cashhere.dataclass.ListItem
 import com.project.cashhere.R
 import com.project.cashhere.Sender
@@ -65,9 +70,12 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
 
             btnDelete.setOnClickListener {
                 val intent2 = Intent("dataDelete")
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent2)
-                deleteFoodData(etKodeUpdate.text.toString())
+                deleteFoodData(etKodeUpdate.text.toString(),context)
                 dialog.dismiss()
+                Intent(context,DashboardActivity :: class.java).also {
+                    startActivity(context,it, Bundle.EMPTY)
+                    ((context as Activity).finish())
+                }
             }
 
             btnUpdateDialog.setOnClickListener {
@@ -77,12 +85,12 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
 
 
                 val intent = Intent("dataUpdate")
-                intent.putExtra("kode",kodeUpdate)
-                intent.putExtra("nama",namaUpdate)
-                intent.putExtra("harga",hargaUpdate)
-                deleteFoodData(kodeUpdate)
+                updateFoodData(kodeUpdate,namaUpdate,hargaUpdate,context)
                 dialog.dismiss()
-                LocalBroadcastManager.getInstance(context).sendBroadcast(intent)
+                Intent(context,DashboardActivity :: class.java).also {
+                    startActivity(context,it, Bundle.EMPTY)
+                    ((context as Activity).finish())
+                }
             }
 
             btnUpdate.setOnClickListener {
@@ -97,7 +105,7 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
         return  listData.size
     }
 
-    fun deleteFoodData(kode:String){
+    fun deleteFoodData(kode:String,context: Context){
         val BASE_URL = "https://cashhere.kspkitasemua.xyz/index.php?op="
         val ACTION = BASE_URL+"food_delete&kode=$kode"
 
@@ -109,6 +117,7 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
                 try{
                     val obj = JSONObject(response)
                     Log.i("hasil",obj.getString("message"))
+                    Toast.makeText(context,obj.getString("message"),Toast.LENGTH_SHORT).show()
                 }catch(e: JSONException){
                     e.printStackTrace()
                 }
@@ -129,6 +138,36 @@ class AdapterRecycleView(val listData : List<ListItem>) : RecyclerView.Adapter<A
         Sender.instance!!.addToRequestQueue(stringRequest)
     }
 
+    fun updateFoodData(kode:String,nama:String,harga:String,context: Context){
+        val ACTION = "https://cashhere.kspkitasemua.xyz/index.php?op=food_update&kode=$kode&nama=$nama&harga=$harga"
 
+        val stringRequest = object : StringRequest(
+            Method.GET,ACTION,
+            Response.Listener<String>{
+
+                    response ->
+                try{
+                    val obj = JSONObject(response)
+                    Log.i("hasil",obj.getString("message"))
+                    Toast.makeText(context,obj.getString("message"),Toast.LENGTH_SHORT).show()
+                }catch(e: JSONException){
+                    e.printStackTrace()
+                }
+            },
+            object : Response.ErrorListener{
+                override fun onErrorResponse(error: VolleyError?) {
+                    Log.e(
+                        "hasil : ",error!!.message.toString()
+                    )
+                }
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getParams(): MutableMap<String, String> {
+                val params = HashMap<String,String>()
+                return params
+            }}
+
+        Sender.instance!!.addToRequestQueue(stringRequest)
+    }
 
 }
